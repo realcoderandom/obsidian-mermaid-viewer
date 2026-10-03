@@ -6,7 +6,7 @@ permissions:
   contents: read
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
@@ -18,7 +18,9 @@ jobs:
       - run: npm ci
         env:
           PUPPETEER_SKIP_DOWNLOAD: 'true'
-      - run: npx puppeteer browsers install chrome --install-deps
+      # The runner includes Chrome's system libraries; --install-deps requires root.
+      - name: Install Chrome for browser tests
+        run: npx puppeteer browsers install chrome
       - run: npm run check
       - name: Validate release metadata and exact version tag
         run: npm run release:check -- --tag "$RELEASE_TAG"
