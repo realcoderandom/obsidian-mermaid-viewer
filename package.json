@@ -1,6 +1,6 @@
 {
-  "name": "mermaid-paper-viewer",
-  "version": "1.5.0",
+  "name": "mermaid-viewer",
+  "version": "1.5.1",
   "private": true,
   "description": "Light-surface Mermaid viewer for Obsidian.",
   "license": "UNLICENSED",

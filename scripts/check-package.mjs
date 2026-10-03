@@ -1,3 +1,4 @@
+import { PACKAGE_ASSETS } from './package-assets.mjs';
 import { readFile, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -15,16 +16,18 @@ if (versions[manifest.version] !== manifest.minAppVersion)
   errors.push('versions.json is missing the current compatibility entry.');
 if (!/^[a-z]+(?:-[a-z]+)*$/.test(manifest.id) || /obsidian|plugin$/.test(manifest.id))
   errors.push('Invalid plugin ID.');
-for (const name of ['main.js', 'manifest.json', 'styles.css']) {
+for (const name of ['main.js', ...PACKAGE_ASSETS]) {
   try {
     await access(path.join(root, 'dist', name));
   } catch {
     errors.push(`Missing dist/${name}. Run npm run build.`);
   }
 }
-for (const name of ['manifest.json', 'styles.css']) {
+for (const name of PACKAGE_ASSETS) {
   try {
-    if ((await read(`dist/${name}`)) !== (await read(name))) errors.push(`dist/${name} is stale.`);
+    const source = await readFile(path.join(root, name));
+    const packaged = await readFile(path.join(root, 'dist', name));
+    if (!source.equals(packaged)) errors.push(`dist/${name} is stale.`);
   } catch {
     /* Reported above. */
   }

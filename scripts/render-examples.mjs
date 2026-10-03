@@ -37,7 +37,7 @@ try {
   }
   const chrome = `*{box-sizing:border-box}body{margin:0;background:#202124;color:#e6e6e6;font-family:Arial,sans-serif}main{max-width:1000px;margin:48px auto}h1{font-size:24px;font-weight:500;margin:0 0 24px}.mermaid>svg{max-width:100%;height:auto}.modal-container{position:fixed;inset:0;display:flex}.modal{background:white}.theme-dark .mermaid>svg{filter:invert(100%) hue-rotate(180deg) saturate(1.25)}`;
   await page.setContent(
-    `<style>${chrome}</style><main class="mermaid-notes markdown-preview-view"><h1>Mermaid Paper Viewer</h1></main>`,
+    `<style>${chrome}</style><main class="mermaid-notes markdown-preview-view"><h1>Mermaid Viewer</h1></main>`,
   );
   await page.addStyleTag({ content: await readFile(path.join(root, 'styles.css'), 'utf8') });
   await page.evaluate(require('../tests/helpers/obsidian-mock.cjs'));

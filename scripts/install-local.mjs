@@ -1,3 +1,4 @@
+import { PACKAGE_ASSETS } from './package-assets.mjs';
 import { readFile, writeFile, mkdir, copyFile, realpath, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,14 +22,16 @@ if (!(await realpath(target)).startsWith(configPath + path.sep))
 const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const backup = path.join(root, 'backups', `local-${stamp}`);
 await mkdir(backup, { recursive: true });
-for (const name of ['main.js', 'styles.css', 'manifest.json', 'README.md']) {
+for (const name of ['main.js', ...PACKAGE_ASSETS]) {
+  await mkdir(path.dirname(path.join(backup, name)), { recursive: true });
+  await mkdir(path.dirname(path.join(target, name)), { recursive: true });
   try {
     await copyFile(path.join(target, name), path.join(backup, name));
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
   const bytes = await readFile(path.join(root, 'dist', name));
-  const temp = path.join(target, `.${name}.update`);
+  const temp = path.join(path.dirname(path.join(target, name)), `.${path.basename(name)}.update`);
   await writeFile(temp, bytes);
   await rename(temp, path.join(target, name));
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.1
+
+- Rename the plugin and package to Mermaid Viewer (`mermaid-viewer`).
+- Split documentation into an English README and a Chinese README, focused on previews, features and usage.
+- Include both guides and example images with the local installation.
+
 ## 1.5.0
 
 - Adopt the Mermaid Paper Viewer identity and `mermaid-paper-viewer` plugin ID.

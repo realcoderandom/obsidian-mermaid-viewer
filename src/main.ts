@@ -11,7 +11,7 @@ import { decorate } from './theme/decorate';
 import { DiagramModal } from './viewer/modal';
 
 /** Composition root: settings, note integration and modal lifetime only. */
-export default class MermaidPaperViewer extends Plugin {
+export default class MermaidViewer extends Plugin {
   settings = { ...DEFAULT_SETTINGS };
   readonly modals = new Set<DiagramModal>();
   private notes?: NoteObserver;

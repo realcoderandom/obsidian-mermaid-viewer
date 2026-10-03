@@ -1,4 +1,5 @@
 import { build, context } from 'esbuild';
+import { PACKAGE_ASSETS } from './package-assets.mjs';
 import { copyFile, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -28,14 +29,14 @@ const options = {
           contents: await readFile(args.path, 'utf8'),
           loader: 'ts',
           resolveDir: path.dirname(args.path),
-          watchFiles: ['manifest.json', 'styles.css', 'README.md'].map((name) =>
-            path.join(root, name),
-          ),
+          watchFiles: PACKAGE_ASSETS.map((name) => path.join(root, name)),
         }));
         builder.onEnd(async (result) => {
           if (result.errors.length) return;
-          for (const name of ['manifest.json', 'styles.css', 'README.md'])
+          for (const name of PACKAGE_ASSETS) {
+            await mkdir(path.dirname(path.join(output, name)), { recursive: true });
             await copyFile(path.join(root, name), path.join(output, name));
+          }
           await mkdir(path.join(root, '.build'), { recursive: true });
           await writeFile(
             path.join(root, '.build/metafile.json'),
@@ -59,5 +60,5 @@ if (process.argv.includes('--watch')) {
     });
 } else {
   await build(options);
-  console.log('Built dist/main.js, manifest.json, styles.css, README.md.');
+  console.log('Built dist/main.js, plugin assets and localized guides with example images.');
 }
