@@ -25,7 +25,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
       - name: Create draft with installable assets
-        run: gh release create "$RELEASE_TAG" dist/main.js dist/manifest.json dist/styles.css --verify-tag --draft --title "$RELEASE_TAG" --generate-notes
+        run: gh release create "$RELEASE_TAG" dist/main.js dist/manifest.json dist/styles.css dist/LICENSE --verify-tag --draft --title "$RELEASE_TAG" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}

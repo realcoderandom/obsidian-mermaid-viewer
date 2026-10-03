@@ -1,6 +1,7 @@
 // Files shared by the build and local installer, relative to the project root.
 export const PACKAGE_ASSETS = [
   'manifest.json',
+  'LICENSE',
   'styles.css',
   'README.md',
   'README.zh-CN.md',
