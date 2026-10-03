@@ -1,0 +1,31 @@
+name: Release draft
+on:
+  push:
+    tags: ['*']
+permissions:
+  contents: read
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
+      - run: npx puppeteer browsers install chrome --install-deps
+      - run: npm run check
+      - name: Validate release metadata and exact version tag
+        run: npm run release:check -- --tag "$RELEASE_TAG"
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+      - name: Create draft with installable assets
+        run: gh release create "$RELEASE_TAG" dist/main.js dist/manifest.json dist/styles.css --verify-tag --draft --title "$RELEASE_TAG" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}

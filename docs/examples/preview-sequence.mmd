@@ -1,0 +1,22 @@
+sequenceDiagram
+  autonumber
+  participant R as Reader
+  participant V as Viewer
+  participant W as Preview worker
+  participant D as Document store
+  R->>V: Open document
+  V->>D: Read content
+  D-->>V: Markdown and metadata
+  V->>W: Prepare preview
+  W->>W: Parse diagram blocks
+  W-->>V: Rendered diagrams
+  V-->>R: Show document
+  Note over R,V: Explore without changing the source
+  R->>V: Open fullscreen
+  V->>V: Fit diagram to viewport
+  loop While exploring
+    R->>V: Pan or zoom
+    V-->>R: Update viewport
+  end
+  R->>V: Close fullscreen
+  V-->>R: Restore reading position

@@ -1,0 +1,496 @@
+/* Warm paper and a single ink-blue accent, following codebase-visualizer.
+   Keep the diagram font aligned with the already-rendered Mermaid geometry. */
+.mermaid.mpv-note-diagram,
+.mpv-diagram-modal,
+.markdown-source-view.mod-cm6 .cm-embed-block:has(> .mermaid.mpv-note-diagram) {
+  --mpv-font: Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --mpv-bg: #f5f4ed;
+  --mpv-surface: #faf9f5;
+  --mpv-subtle: #e8e6dc;
+  --mpv-text: #141413;
+  --mpv-muted: #504e49;
+  --mpv-border: #d6d3c7;
+  --mpv-line: #504e49;
+  --mpv-accent: #1b365d;
+  --mpv-on-accent: #faf9f5;
+  --mpv-lifeline: #aaa79d;
+  --mpv-note-bg: #e8e6dc;
+  --mpv-note-border: #8c897c;
+  --mpv-note-text: #3d3d3a;
+  --mpv-band: #e8e6dc;
+  --mpv-entry-bg: #1b365d;
+  --mpv-entry-border: #1b365d;
+  --mpv-entry-text: #faf9f5;
+  --mpv-service-bg: #eef2f7;
+  --mpv-service-border: #1b365d;
+  --mpv-service-text: #141413;
+  --mpv-cache-bg: #e4ecf5;
+  --mpv-cache-border: #1b365d;
+  --mpv-cache-text: #141413;
+  --mpv-upstream-bg: #faf9f5;
+  --mpv-upstream-border: #6b6a64;
+  --mpv-upstream-text: #141413;
+  --mpv-neutral-bg: #e8e6dc;
+  --mpv-neutral-border: #8c897c;
+  --mpv-neutral-text: #3d3d3a;
+  --mpv-error-bg: #f0e0d8;
+  --mpv-error-border: #8b4513;
+  --mpv-error-text: #713810;
+}
+/* The diagram surface stays light even inside an Obsidian dark vault. */
+.mermaid.mpv-note-diagram {
+  color-scheme: light;
+  color: var(--mpv-text);
+  padding: 16px 20px 20px;
+  margin: 20px 0;
+  background: var(--mpv-surface) !important;
+  border: 1px solid var(--mpv-border);
+  border-radius: 8px;
+}
+/* Obsidian inverts Mermaid SVGs in dark mode; our paper palette must opt out. */
+.mermaid.mpv-note-diagram > svg.mpv-diagram {
+  filter: none !important;
+  color-scheme: light;
+}
+.mpv-mermaid-cardbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-family: var(--mpv-font);
+}
+.mpv-mermaid-caption {
+  flex: 1;
+  min-width: 0;
+  color: var(--mpv-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mpv-note-diagram .mpv-mermaid-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  margin: 0;
+  padding: 4px 8px;
+  height: 28px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--mpv-accent);
+  font: 12px var(--mpv-font);
+  box-shadow: none;
+  cursor: pointer;
+}
+.mpv-note-diagram .mpv-mermaid-open:hover {
+  background: var(--mpv-cache-bg);
+}
+.mpv-note-diagram .mpv-mermaid-open:focus-visible {
+  outline: 2px solid var(--mpv-accent);
+  outline-offset: 2px;
+}
+.mpv-note-diagram .mpv-mermaid-open svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex: none;
+}
+/* Live Preview owns the source-edit action. Keep that control in place and
+   align it with our header; scope every override to a decorated Mermaid card. */
+.markdown-source-view.mod-cm6 .cm-embed-block:has(> .mermaid.mpv-note-diagram) {
+  --embed-block-shadow-hover: none;
+  margin-block: 20px;
+}
+.markdown-source-view.mod-cm6 .cm-embed-block:has(> .mermaid.mpv-note-diagram):hover {
+  box-shadow: none;
+  overflow: visible;
+  cursor: default;
+}
+.markdown-source-view.mod-cm6 .cm-embed-block > .mermaid.mpv-note-diagram {
+  margin-block: 0;
+}
+.markdown-source-view.mod-cm6
+  .cm-embed-block:has(> .embed-actions)
+  > .mermaid.mpv-note-diagram
+  > .mpv-mermaid-cardbar {
+  /* 32px source action + 12px gap, reserved even before hover. */
+  padding-inline-end: 44px;
+}
+.markdown-source-view.mod-cm6 .cm-embed-block:has(> .mermaid.mpv-note-diagram) > .embed-actions {
+  /* Match the card's 1px border and 16px/20px content padding. */
+  top: 17px;
+  inset-inline-end: 21px;
+  opacity: 1;
+}
+.markdown-source-view.mod-cm6
+  .cm-embed-block:has(> .mermaid.mpv-note-diagram)
+  > .embed-actions
+  > .embed-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--mpv-accent);
+  cursor: pointer;
+}
+.markdown-source-view.mod-cm6
+  .cm-embed-block:has(> .mermaid.mpv-note-diagram)
+  > .embed-actions
+  > .embed-action:hover {
+  background: var(--mpv-cache-bg);
+}
+.markdown-source-view.mod-cm6
+  .cm-embed-block:has(> .mermaid.mpv-note-diagram)
+  > .embed-actions
+  > .embed-action:focus-visible {
+  outline: 2px solid var(--mpv-accent);
+  outline-offset: 2px;
+}
+.markdown-source-view.mod-cm6
+  .cm-embed-block:has(> .mermaid.mpv-note-diagram)
+  > .embed-actions
+  > .embed-action
+  svg {
+  width: 14px;
+  height: 14px;
+}
+.modal-container.mpv-diagram-container {
+  padding: 0;
+}
+.modal.mpv-diagram-modal {
+  color-scheme: light;
+  --text-normal: #141413;
+  --text-muted: #504e49;
+  --text-faint: #77746b;
+  --background-primary: #faf9f5;
+  --background-secondary: #f5f4ed;
+  --interactive-normal: #faf9f5;
+  --interactive-hover: #e8e6dc;
+  --background-modifier-border: #d6d3c7;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  border-radius: 0;
+  background: var(--mpv-surface);
+  color: var(--mpv-text);
+  box-shadow: none;
+  font-family: var(--mpv-font);
+}
+/* Obsidian changes the built-in close control between versions. */
+.mpv-diagram-modal > .modal-header-button,
+.mpv-diagram-modal > .modal-close-button,
+.mpv-diagram-modal > .modal-close {
+  display: none !important;
+}
+.mpv-diagram-modal > .modal-header {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.mpv-diagram-modal .modal-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.mpv-diagram-modal .modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.mpv-diagram-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--mpv-border);
+  flex: none;
+}
+.mpv-diagram-identity {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+.mpv-diagram-kind {
+  color: var(--mpv-muted);
+  font-size: 11px;
+  white-space: nowrap;
+  border-right: 1px solid var(--mpv-border);
+  padding-right: 12px;
+}
+.mpv-diagram-header h2 {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--mpv-text);
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mpv-diagram-file {
+  color: var(--mpv-muted);
+  font-size: 11px;
+  max-width: 240px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mpv-diagram-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.mpv-diagram-modal .mpv-icon-button,
+.mpv-diagram-modal .mpv-text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  margin: 0;
+  border: 0;
+  border-radius: 5px;
+  color: var(--mpv-text);
+  background: transparent;
+  box-shadow: none;
+  font: 12px var(--mpv-font);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mpv-diagram-modal .mpv-icon-button {
+  width: 32px;
+  padding: 7px;
+  flex: none;
+}
+.mpv-diagram-modal .mpv-icon-button svg {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+.mpv-diagram-modal button:hover,
+.mpv-diagram-modal button[aria-pressed='true'] {
+  background: var(--mpv-cache-bg);
+  color: var(--mpv-accent);
+}
+.mpv-diagram-modal button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+}
+.mpv-diagram-modal button:focus-visible,
+.mpv-mermaid-open:focus-visible {
+  outline: 2px solid var(--mpv-accent);
+  outline-offset: 2px;
+}
+.mpv-diagram-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--mpv-surface);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.mpv-diagram-stage:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px #1b365d33;
+}
+.mpv-diagram-stage.is-dragging {
+  cursor: grabbing;
+}
+.mpv-diagram-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.mpv-diagram-toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 60px;
+  padding: 10px 24px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--mpv-border);
+  background: var(--mpv-bg);
+}
+.mpv-diagram-modes,
+.mpv-diagram-zoom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mpv-diagram-zoom {
+  padding-left: 16px;
+  border-left: 1px solid var(--mpv-border);
+}
+.mpv-diagram-scale {
+  width: 48px;
+  text-align: center;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--mpv-muted);
+}
+.mpv-diagram-hint {
+  color: var(--mpv-muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.mpv-diagram-help {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+  width: 300px;
+  max-width: calc(100% - 32px);
+  max-height: calc(100% - 136px);
+  overflow-y: auto;
+  z-index: 2;
+  padding: 18px;
+  border: 1px solid var(--mpv-border);
+  border-radius: 8px;
+  background: var(--mpv-surface);
+  color: var(--mpv-text);
+  box-shadow: 0 4px 24px #0000000d;
+  font-size: 12px;
+}
+.mpv-diagram-help[hidden] {
+  display: none;
+}
+.mpv-diagram-help strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.mpv-help-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+}
+.mpv-help-row span:last-child {
+  color: var(--mpv-muted);
+}
+.mpv-diagram-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  border-top: 1px solid var(--mpv-border);
+  margin-top: 12px;
+  padding-top: 14px;
+}
+.mpv-diagram-legend-item {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--mpv-muted);
+  font-size: 11px;
+}
+.mpv-diagram-legend-item i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  border: 1px solid;
+  display: inline-block;
+}
+.mpv-diagram-legend-item[data-role='entry'] i {
+  background: var(--mpv-entry-bg);
+  border-color: var(--mpv-entry-border);
+}
+.mpv-diagram-legend-item[data-role='service'] i {
+  background: var(--mpv-service-bg);
+  border-color: var(--mpv-service-border);
+}
+.mpv-diagram-legend-item[data-role='cache'] i {
+  background: var(--mpv-cache-bg);
+  border-color: var(--mpv-cache-border);
+}
+.mpv-diagram-legend-item[data-role='upstream'] i {
+  background: var(--mpv-upstream-bg);
+  border-color: var(--mpv-upstream-border);
+}
+.mpv-diagram-legend-item[data-role='neutral'] i {
+  background: var(--mpv-neutral-bg);
+  border-color: var(--mpv-neutral-border);
+}
+.mpv-diagram-legend-item[data-role='error'] i {
+  background: var(--mpv-error-bg);
+  border-color: var(--mpv-error-border);
+}
+@media (max-width: 800px) {
+  .mpv-diagram-file,
+  .mpv-diagram-hint {
+    display: none;
+  }
+  .mpv-diagram-header {
+    padding: 10px 16px;
+    min-height: 56px;
+  }
+}
+@media (max-width: 480px) {
+  .mpv-diagram-kind {
+    display: none;
+  }
+  .mpv-diagram-header h2 {
+    font-size: 14px;
+  }
+  .mpv-diagram-header {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+  .mpv-diagram-toolbar {
+    padding-inline: 8px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .mpv-diagram-modal .mpv-text-button {
+    padding-inline: 8px;
+  }
+  .mpv-diagram-zoom {
+    padding-left: 8px;
+  }
+  .mpv-diagram-help {
+    right: 12px;
+  }
+}
+
+.mpv-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

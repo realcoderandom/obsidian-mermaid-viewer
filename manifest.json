@@ -1,0 +1,9 @@
+{
+  "id": "mermaid-paper-viewer",
+  "name": "Mermaid Paper Viewer",
+  "version": "1.5.0",
+  "minAppVersion": "1.5.0",
+  "description": "View Mermaid diagrams on a light canvas with fullscreen zoom, pan, and configurable note scope.",
+  "author": "Local",
+  "isDesktopOnly": false
+}

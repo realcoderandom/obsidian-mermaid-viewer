@@ -1,0 +1,7 @@
+flowchart LR
+  draft["Write a draft"]:::focus --> review["Review content"]:::step
+  review --> ready{"Ready to share?"}:::branch
+  ready -->|Yes| publish["Publish page"]:::ext
+  ready -->|Revise| review
+  publish --> library[("Document library")]:::store
+  publish -.-> retry["Retry later"]:::err

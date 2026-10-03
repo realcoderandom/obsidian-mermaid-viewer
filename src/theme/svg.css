@@ -1,0 +1,179 @@
+svg.mpv-diagram {
+  background: transparent !important;
+  color: var(--mpv-text, #141413);
+  font-family: var(--mpv-font, Arial, sans-serif) !important;
+}
+svg.mpv-diagram text,
+svg.mpv-diagram foreignObject,
+svg.mpv-diagram .nodeLabel {
+  font-family: var(--mpv-font, Arial, sans-serif) !important;
+}
+svg.mpv-diagram text,
+svg.mpv-diagram .nodeLabel,
+svg.mpv-diagram .nodeLabel p,
+svg.mpv-diagram .nodeLabel span {
+  fill: var(--mpv-text, #141413) !important;
+  color: var(--mpv-text, #141413) !important;
+}
+svg.mpv-diagram .actor-line {
+  stroke: var(--mpv-lifeline, #aaa79d) !important;
+  stroke-width: 1px !important;
+  stroke-dasharray: none !important;
+  vector-effect: none;
+}
+svg.mpv-diagram rect.actor {
+  fill: var(--mpv-service-bg, #eef2f7) !important;
+  stroke: var(--mpv-service-border, #1b365d) !important;
+  stroke-width: 1px !important;
+  rx: 8px;
+  ry: 8px;
+}
+svg.mpv-diagram text.actor {
+  font-weight: 600 !important;
+}
+svg.mpv-diagram .messageLine0,
+svg.mpv-diagram .messageLine1,
+svg.mpv-diagram .flowchart-link {
+  stroke: var(--mpv-line, #504e49) !important;
+  stroke-width: 1.35px !important;
+}
+svg.mpv-diagram .messageText,
+svg.mpv-diagram .edgeLabel,
+svg.mpv-diagram .edgeLabel p {
+  fill: var(--mpv-text, #141413) !important;
+  color: var(--mpv-text, #141413) !important;
+}
+svg.mpv-diagram .edgeLabel p,
+svg.mpv-diagram .edgeLabel .labelBkg {
+  background: var(--mpv-surface, #faf9f5) !important;
+}
+svg.mpv-diagram marker path {
+  fill: var(--mpv-line, #504e49) !important;
+  stroke: var(--mpv-line, #504e49) !important;
+}
+svg.mpv-diagram .sequenceNumber {
+  fill: var(--mpv-on-accent, #faf9f5) !important;
+}
+svg.mpv-diagram marker[id$='sequencenumber'] circle {
+  fill: var(--mpv-accent, #1b365d) !important;
+}
+svg.mpv-diagram .loopLine {
+  stroke: var(--mpv-border, #d6d3c7) !important;
+  stroke-width: 1px !important;
+}
+svg.mpv-diagram .labelBox {
+  fill: var(--mpv-subtle, #e8e6dc) !important;
+  stroke: var(--mpv-border, #d6d3c7) !important;
+}
+svg.mpv-diagram .labelText,
+svg.mpv-diagram .loopText,
+svg.mpv-diagram .loopText tspan {
+  fill: var(--mpv-muted, #504e49) !important;
+}
+svg.mpv-diagram rect.note {
+  fill: var(--mpv-note-bg, #e8e6dc) !important;
+  stroke: var(--mpv-note-border, #8c897c) !important;
+  rx: 6px;
+  ry: 6px;
+}
+svg.mpv-diagram .noteText,
+svg.mpv-diagram .noteText tspan {
+  fill: var(--mpv-note-text, #3d3d3a) !important;
+}
+svg.mpv-diagram rect.rect {
+  fill: var(--mpv-band, #e8e6dc) !important;
+  opacity: 0.5 !important;
+}
+svg.mpv-diagram .node > rect,
+svg.mpv-diagram .node > polygon,
+svg.mpv-diagram .node > circle,
+svg.mpv-diagram .node > path {
+  fill: var(--mpv-service-bg, #eef2f7) !important;
+  stroke: var(--mpv-service-border, #1b365d) !important;
+  stroke-width: 1px !important;
+}
+svg.mpv-diagram .node > rect {
+  rx: 6px;
+  ry: 6px;
+}
+svg.mpv-diagram .cluster rect {
+  fill: var(--mpv-surface) !important;
+  stroke: var(--mpv-border) !important;
+}
+svg.mpv-diagram rect[class^='activation'] {
+  fill: var(--mpv-cache-bg) !important;
+  stroke: var(--mpv-cache-border) !important;
+}
+svg.mpv-diagram .edgeLabel rect {
+  fill: var(--mpv-surface) !important;
+  opacity: 1 !important;
+}
+svg.mpv-diagram .edgeLabel foreignObject div {
+  background: var(--mpv-surface) !important;
+  color: var(--mpv-text) !important;
+}
+svg.mpv-diagram g[data-mpv-role] > rect,
+svg.mpv-diagram g[data-mpv-role] > polygon,
+svg.mpv-diagram g[data-mpv-role] > circle,
+svg.mpv-diagram g[data-mpv-role] > path,
+svg.mpv-diagram g[data-mpv-role] .actor-man circle {
+  fill: var(--mpv-role-bg) !important;
+  stroke: var(--mpv-role-border) !important;
+}
+svg.mpv-diagram g[data-mpv-role] text.actor,
+svg.mpv-diagram g[data-mpv-role] text.actor tspan,
+svg.mpv-diagram g[data-mpv-role] .nodeLabel,
+svg.mpv-diagram g[data-mpv-role] .nodeLabel p,
+svg.mpv-diagram g[data-mpv-role] .nodeLabel span {
+  fill: var(--mpv-role-text) !important;
+  color: var(--mpv-role-text) !important;
+}
+svg.mpv-diagram g[data-mpv-role] .actor-man line {
+  stroke: var(--mpv-role-border) !important;
+}
+
+/* Stick-figure captions sit on paper, outside any filled participant box. */
+svg.mpv-diagram g.actor-man[data-mpv-role] > line {
+  stroke: var(--mpv-accent) !important;
+}
+svg.mpv-diagram g.actor-man[data-mpv-role] text.actor,
+svg.mpv-diagram g.actor-man[data-mpv-role] text.actor tspan {
+  fill: var(--mpv-text) !important;
+  color: var(--mpv-text) !important;
+  stroke: none !important;
+}
+svg.mpv-diagram g[data-mpv-role='entry'] {
+  --mpv-role-bg: var(--mpv-entry-bg);
+  --mpv-role-border: var(--mpv-entry-border);
+  --mpv-role-text: var(--mpv-entry-text);
+}
+
+svg.mpv-diagram g[data-mpv-role='service'] {
+  --mpv-role-bg: var(--mpv-service-bg);
+  --mpv-role-border: var(--mpv-service-border);
+  --mpv-role-text: var(--mpv-service-text);
+}
+
+svg.mpv-diagram g[data-mpv-role='cache'] {
+  --mpv-role-bg: var(--mpv-cache-bg);
+  --mpv-role-border: var(--mpv-cache-border);
+  --mpv-role-text: var(--mpv-cache-text);
+}
+
+svg.mpv-diagram g[data-mpv-role='upstream'] {
+  --mpv-role-bg: var(--mpv-upstream-bg);
+  --mpv-role-border: var(--mpv-upstream-border);
+  --mpv-role-text: var(--mpv-upstream-text);
+}
+
+svg.mpv-diagram g[data-mpv-role='neutral'] {
+  --mpv-role-bg: var(--mpv-neutral-bg);
+  --mpv-role-border: var(--mpv-neutral-border);
+  --mpv-role-text: var(--mpv-neutral-text);
+}
+
+svg.mpv-diagram g[data-mpv-role='error'] {
+  --mpv-role-bg: var(--mpv-error-bg);
+  --mpv-role-border: var(--mpv-error-border);
+  --mpv-role-text: var(--mpv-error-text);
+}

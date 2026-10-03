@@ -1,0 +1,28 @@
+# Changelog
+
+## 1.5.0
+
+- Adopt the Mermaid Paper Viewer identity and `mermaid-paper-viewer` plugin ID.
+- Use the `mpv-` namespace throughout source, styles and tests.
+- Simplify settings and coloring to a generic, semantic-class-based viewer.
+- Add bilingual documentation, original Mermaid examples and reproducible screenshots.
+
+## 1.4.1
+
+- Remove the extra Live Preview hover frame and align native source editing with the card header.
+- Preserve other code blocks and keyboard focus indicators.
+
+## 1.4.0
+
+- Separate camera, input, UI, SVG, theme, settings and host integration into strict TypeScript modules.
+- Add reproducible builds, validation, unit/browser tests, CI and draft Release workflows.
+- Add configurable note scope and synchronous initial viewport layout.
+
+## 1.3.0
+
+- Use a fixed light surface, thin lifelines and a compact fullscreen layout.
+- Improve width-based reading, touch gestures, Escape handling and cleanup.
+
+## 1.2.0
+
+- Use an SVG viewBox camera for stable zoom and fractional anchor positioning.

@@ -1,0 +1,137 @@
+import { setIcon } from 'obsidian';
+import type { DiagramMetadata } from '../diagram/types';
+import type { ViewerSettings } from '../settings';
+import { clean, decorate } from '../theme/decorate';
+
+/** Owns only injected note controls/styles. No modal or camera logic lives here. */
+export class NoteObserver {
+  private readonly owned = new Map<HTMLElement, SVGSVGElement>();
+  private readonly observer: MutationObserver;
+  private pending = 0;
+  private stopped = false;
+  private readonly click: (event: MouseEvent) => void;
+
+  constructor(
+    private readonly root: HTMLElement,
+    private readonly settings: () => ViewerSettings,
+    private readonly metadata: (svg: SVGSVGElement) => DiagramMetadata,
+    open: (svg: SVGSVGElement) => void,
+  ) {
+    this.click = (event) => {
+      const target = event.target as Element | null;
+      const button = target?.closest('.mpv-mermaid-open');
+      const svg = button?.closest('.mermaid')?.querySelector<SVGSVGElement>(':scope > svg');
+      if (!svg || !this.eligible(svg)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      open(svg);
+    };
+    root.addEventListener('click', this.click);
+    this.scan();
+    this.observer = new MutationObserver((records) => {
+      if (records.some((record) => this.relevant(record))) this.schedule();
+    });
+    this.observer.observe(root, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['class'],
+      attributeOldValue: true,
+    });
+  }
+
+  eligible(svg: SVGSVGElement): boolean {
+    if (!this.root.contains(svg) || !svg.closest('.mermaid')) return false;
+    const { noteClass } = this.settings();
+    return !noteClass || !!svg.closest(`.${noteClass}`);
+  }
+
+  private relevant(record: MutationRecord): boolean {
+    const el =
+      record.target.nodeType === 1 ? (record.target as Element) : record.target.parentElement;
+    if (!el || el.closest('.mpv-diagram-container, .mpv-mermaid-cardbar, svg')) return false;
+    if (record.type === 'attributes') {
+      const name = this.settings().noteClass;
+      return (
+        !!name &&
+        (record.oldValue ?? '').split(/\s+/).includes(name) !== el.classList.contains(name)
+      );
+    }
+    if (el.closest('.markdown-preview-view, .markdown-source-view, .mpv-note-diagram')) return true;
+    return [...record.addedNodes, ...record.removedNodes].some(
+      (node) =>
+        node.nodeType === 1 &&
+        ((node as Element).matches('.mermaid, .mpv-note-diagram') ||
+          (node as Element).querySelector('.mermaid')),
+    );
+  }
+
+  private schedule(): void {
+    if (this.stopped || this.pending) return;
+    this.pending = requestAnimationFrame(() => {
+      this.pending = 0;
+      this.scan();
+    });
+  }
+
+  refresh(): void {
+    if (!this.stopped) this.scan();
+  }
+
+  private scan(): void {
+    for (const [container, svg] of this.owned) {
+      if (!this.eligible(svg) || container.querySelector(':scope > svg') !== svg) {
+        this.remove(container, svg);
+        this.owned.delete(container);
+      }
+    }
+    for (const svg of this.root.querySelectorAll<SVGSVGElement>('.mermaid > svg')) {
+      if (!this.eligible(svg)) continue;
+      const container = svg.parentElement;
+      if (!container) continue;
+      container.classList.add('mpv-note-diagram');
+      this.owned.set(container, svg);
+      decorate(svg);
+      const meta = this.metadata(svg);
+      let bar = container.querySelector<HTMLElement>(':scope > .mpv-mermaid-cardbar');
+      if (!bar) {
+        bar = container.ownerDocument.createElement('div');
+        bar.className = 'mpv-mermaid-cardbar';
+        bar.createEl('span', { cls: 'mpv-mermaid-caption' });
+        const button = bar.createEl('button', {
+          cls: 'mpv-mermaid-open',
+          attr: {
+            type: 'button',
+            title: '全屏查看此图，支持缩放和拖动',
+            'aria-label': '全屏查看 Mermaid 图表',
+          },
+        });
+        setIcon(button, 'maximize-2');
+        button.createEl('span', { text: '全屏查看' });
+        container.prepend(bar);
+      }
+      const caption = bar.querySelector<HTMLElement>('.mpv-mermaid-caption');
+      const text = `${meta.kind} · ${meta.title}`;
+      if (caption && caption.textContent !== text) {
+        caption.textContent = text;
+        caption.title = meta.title;
+      }
+    }
+  }
+
+  private remove(container: HTMLElement, svg: SVGSVGElement): void {
+    clean(svg);
+    container.classList.remove('mpv-note-diagram');
+    container.querySelector(':scope > .mpv-mermaid-cardbar')?.remove();
+  }
+
+  dispose(): void {
+    this.stopped = true;
+    this.observer.disconnect();
+    cancelAnimationFrame(this.pending);
+    this.root.removeEventListener('click', this.click);
+    for (const [container, svg] of this.owned) this.remove(container, svg);
+    this.owned.clear();
+  }
+}

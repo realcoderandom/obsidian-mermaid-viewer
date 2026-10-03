@@ -1,0 +1,8 @@
+node_modules
+dist
+backups
+previews
+.build
+.test-build
+package-lock.json
+tests/fixtures/*.svg
