@@ -1,178 +1,182 @@
-svg.mpv-diagram {
+/* Mermaid's generated rules use an SVG ID. The reserved ID in :not raises
+   specificity above those rules while matching only our decorated diagrams. */
+svg.mpv-diagram:not(#mpv-css-priority) {
   background: transparent;
+}
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) {
   color: var(--mpv-text, #141413);
   font-family: var(--mpv-font, Arial, sans-serif);
 }
-svg.mpv-diagram text,
-svg.mpv-diagram foreignObject,
-svg.mpv-diagram .nodeLabel {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) text,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) foreignObject,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .nodeLabel {
   font-family: var(--mpv-font, Arial, sans-serif);
 }
-svg.mpv-diagram text,
-svg.mpv-diagram .nodeLabel,
-svg.mpv-diagram .nodeLabel p,
-svg.mpv-diagram .nodeLabel span {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) text,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .nodeLabel,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .nodeLabel p,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .nodeLabel span {
   fill: var(--mpv-text, #141413);
   color: var(--mpv-text, #141413);
 }
-svg.mpv-diagram .actor-line {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .actor-line {
   stroke: var(--mpv-lifeline, #aaa79d);
   stroke-width: 1px;
   stroke-dasharray: none;
   vector-effect: none;
 }
-svg.mpv-diagram rect.actor {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) rect.actor {
   fill: var(--mpv-service-bg, #eef2f7);
   stroke: var(--mpv-service-border, #1b365d);
   stroke-width: 1px;
   rx: 8px;
   ry: 8px;
 }
-svg.mpv-diagram text.actor {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) text.actor {
   font-weight: 600;
 }
-svg.mpv-diagram .messageLine0,
-svg.mpv-diagram .messageLine1,
-svg.mpv-diagram .flowchart-link {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .messageLine0,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .messageLine1,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .flowchart-link {
   stroke: var(--mpv-line, #504e49);
   stroke-width: 1.35px;
 }
-svg.mpv-diagram .messageText,
-svg.mpv-diagram .edgeLabel,
-svg.mpv-diagram .edgeLabel p {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .messageText,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel p {
   fill: var(--mpv-text, #141413);
   color: var(--mpv-text, #141413);
 }
-svg.mpv-diagram .edgeLabel p,
-svg.mpv-diagram .edgeLabel .labelBkg {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel p,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel .labelBkg {
   background: var(--mpv-surface, #faf9f5);
 }
-svg.mpv-diagram marker path {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) marker path {
   fill: var(--mpv-line, #504e49);
   stroke: var(--mpv-line, #504e49);
 }
-svg.mpv-diagram .sequenceNumber {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .sequenceNumber {
   fill: var(--mpv-on-accent, #faf9f5);
 }
-svg.mpv-diagram marker[id$='sequencenumber'] circle {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) marker[id$='sequencenumber'] circle {
   fill: var(--mpv-accent, #1b365d);
 }
-svg.mpv-diagram .loopLine {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .loopLine {
   stroke: var(--mpv-border, #d6d3c7);
   stroke-width: 1px;
 }
-svg.mpv-diagram .labelBox {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .labelBox {
   fill: var(--mpv-subtle, #e8e6dc);
   stroke: var(--mpv-border, #d6d3c7);
 }
-svg.mpv-diagram .labelText,
-svg.mpv-diagram .loopText,
-svg.mpv-diagram .loopText tspan {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .labelText,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .loopText,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .loopText tspan {
   fill: var(--mpv-muted, #504e49);
 }
-svg.mpv-diagram rect.note {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) rect.note {
   fill: var(--mpv-note-bg, #e8e6dc);
   stroke: var(--mpv-note-border, #8c897c);
   rx: 6px;
   ry: 6px;
 }
-svg.mpv-diagram .noteText,
-svg.mpv-diagram .noteText tspan {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .noteText,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .noteText tspan {
   fill: var(--mpv-note-text, #3d3d3a);
 }
-svg.mpv-diagram rect.rect {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) rect.rect {
   fill: var(--mpv-band, #e8e6dc);
   opacity: 0.5;
 }
-svg.mpv-diagram .node > rect,
-svg.mpv-diagram .node > polygon,
-svg.mpv-diagram .node > circle,
-svg.mpv-diagram .node > path {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .node > rect,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .node > polygon,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .node > circle,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .node > path {
   fill: var(--mpv-service-bg, #eef2f7);
   stroke: var(--mpv-service-border, #1b365d);
   stroke-width: 1px;
 }
-svg.mpv-diagram .node > rect {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .node > rect {
   rx: 6px;
   ry: 6px;
 }
-svg.mpv-diagram .cluster rect {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .cluster rect {
   fill: var(--mpv-surface);
   stroke: var(--mpv-border);
 }
-svg.mpv-diagram rect[class^='activation'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) rect[class^='activation'] {
   fill: var(--mpv-cache-bg);
   stroke: var(--mpv-cache-border);
 }
-svg.mpv-diagram .edgeLabel rect {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel rect {
   fill: var(--mpv-surface);
   opacity: 1;
 }
-svg.mpv-diagram .edgeLabel foreignObject div {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) .edgeLabel foreignObject div {
   background: var(--mpv-surface);
   color: var(--mpv-text);
 }
-svg.mpv-diagram g[data-mpv-role] > rect,
-svg.mpv-diagram g[data-mpv-role] > polygon,
-svg.mpv-diagram g[data-mpv-role] > circle,
-svg.mpv-diagram g[data-mpv-role] > path,
-svg.mpv-diagram g[data-mpv-role] .actor-man circle {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] > rect,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] > polygon,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] > circle,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] > path,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] .actor-man circle {
   fill: var(--mpv-role-bg);
   stroke: var(--mpv-role-border);
 }
-svg.mpv-diagram g[data-mpv-role] text.actor,
-svg.mpv-diagram g[data-mpv-role] text.actor tspan,
-svg.mpv-diagram g[data-mpv-role] .nodeLabel,
-svg.mpv-diagram g[data-mpv-role] .nodeLabel p,
-svg.mpv-diagram g[data-mpv-role] .nodeLabel span {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] text.actor,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] text.actor tspan,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] .nodeLabel,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] .nodeLabel p,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] .nodeLabel span {
   fill: var(--mpv-role-text);
   color: var(--mpv-role-text);
 }
-svg.mpv-diagram g[data-mpv-role] .actor-man line {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role] .actor-man line {
   stroke: var(--mpv-role-border);
 }
 
 /* Stick-figure captions sit on paper, outside any filled participant box. */
-svg.mpv-diagram g.actor-man[data-mpv-role] > line {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g.actor-man[data-mpv-role] > line {
   stroke: var(--mpv-accent);
 }
-svg.mpv-diagram g.actor-man[data-mpv-role] text.actor,
-svg.mpv-diagram g.actor-man[data-mpv-role] text.actor tspan {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g.actor-man[data-mpv-role] text.actor,
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g.actor-man[data-mpv-role] text.actor tspan {
   fill: var(--mpv-text);
   color: var(--mpv-text);
   stroke: none;
 }
-svg.mpv-diagram g[data-mpv-role='entry'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='entry'] {
   --mpv-role-bg: var(--mpv-entry-bg);
   --mpv-role-border: var(--mpv-entry-border);
   --mpv-role-text: var(--mpv-entry-text);
 }
 
-svg.mpv-diagram g[data-mpv-role='service'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='service'] {
   --mpv-role-bg: var(--mpv-service-bg);
   --mpv-role-border: var(--mpv-service-border);
   --mpv-role-text: var(--mpv-service-text);
 }
 
-svg.mpv-diagram g[data-mpv-role='cache'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='cache'] {
   --mpv-role-bg: var(--mpv-cache-bg);
   --mpv-role-border: var(--mpv-cache-border);
   --mpv-role-text: var(--mpv-cache-text);
 }
 
-svg.mpv-diagram g[data-mpv-role='upstream'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='upstream'] {
   --mpv-role-bg: var(--mpv-upstream-bg);
   --mpv-role-border: var(--mpv-upstream-border);
   --mpv-role-text: var(--mpv-upstream-text);
 }
 
-svg.mpv-diagram g[data-mpv-role='neutral'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='neutral'] {
   --mpv-role-bg: var(--mpv-neutral-bg);
   --mpv-role-border: var(--mpv-neutral-border);
   --mpv-role-text: var(--mpv-neutral-text);
 }
 
-svg.mpv-diagram g[data-mpv-role='error'] {
+svg.mpv-diagram.mpv-palette:not(#mpv-css-priority) g[data-mpv-role='error'] {
   --mpv-role-bg: var(--mpv-error-bg);
   --mpv-role-border: var(--mpv-error-border);
   --mpv-role-text: var(--mpv-error-text);

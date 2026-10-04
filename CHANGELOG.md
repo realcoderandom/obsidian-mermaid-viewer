@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.3
+
+- Load all viewer and diagram CSS through the Obsidian-managed stylesheet, without injecting style elements.
+- Preserve fixed SVG geometry, light colors and reversible inline styling in the shared document.
+- Use the dedicated Obsidian span helper throughout the controls.
+- Publish only the three supported installation assets, with GitHub build provenance verified before publication.
+
 ## 1.5.2
 
 - Publish complete, verified GitHub Release assets with a versioned title and release notes.

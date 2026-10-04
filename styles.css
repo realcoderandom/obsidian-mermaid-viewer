@@ -1,3 +1,5 @@
+@import './src/theme/svg.css';
+
 /* Warm paper and a single ink-blue accent, following codebase-visualizer.
    Keep the diagram font aligned with the already-rendered Mermaid geometry. */
 .mermaid.mpv-note-diagram,
@@ -332,6 +334,21 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+/* Keep the nested SVG dimensions fixed while only its parent's viewBox moves.
+   All styles are loaded by Obsidian; no Shadow DOM or runtime style injection. */
+.mpv-diagram-canvas svg {
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+.mpv-diagram-canvas > .mpv-svg-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.mpv-diagram-canvas .mpv-svg-content p {
+  margin: 0;
 }
 .mpv-diagram-toolbar {
   flex: none;

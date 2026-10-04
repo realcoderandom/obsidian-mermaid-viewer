@@ -39,7 +39,7 @@ try {
   await page.setContent(
     `<style>${chrome}</style><main class="mermaid-notes markdown-preview-view"><h1>Mermaid Viewer</h1></main>`,
   );
-  await page.addStyleTag({ content: await readFile(path.join(root, 'styles.css'), 'utf8') });
+  await page.addStyleTag({ content: await readFile(path.join(root, 'dist/styles.css'), 'utf8') });
   await page.evaluate(require('../tests/helpers/obsidian-mock.cjs'));
   await page.evaluate(
     async (code) => {
@@ -64,10 +64,7 @@ try {
     }
     await page.click('.mpv-mermaid-open');
     await page.waitForFunction(() =>
-      document
-        .querySelector('.mpv-diagram-canvas')
-        ?.shadowRoot.querySelector('svg')
-        ?.hasAttribute('viewBox'),
+      document.querySelector('.mpv-diagram-canvas')?.querySelector('svg')?.hasAttribute('viewBox'),
     );
     await page.evaluate(() => [...viewer.modals][0].fit());
     await page.screenshot({

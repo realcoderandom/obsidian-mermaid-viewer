@@ -11,7 +11,7 @@
 | `viewer/camera.ts`                 | Pure zoom, pan and fit geometry                                              |
 | `viewer/input.ts`                  | Mouse, keyboard, wheel, touch and pointer cleanup                            |
 | `viewer/ui.ts`                     | Controls, help and legends                                                   |
-| `viewer/svg-viewport.ts`           | Fixed inner SVG, outer camera viewport and Shadow DOM                        |
+| `viewer/svg-viewport.ts`           | Fixed inner SVG and outer camera viewport                                    |
 | `theme/`                           | Generic semantic roles and reversible SVG styling                            |
 | `styles.css`                       | Light surfaces, inline cards, Live Preview integration and fullscreen layout |
 
@@ -34,7 +34,8 @@
 - Browser tests exercise the built bundle with the API mock in `tests/helpers/`.
 - Theme tests check contrast, actor bounds and host-theme invariance. Integration checks cover exact style restoration, concurrent DOM edits, scoped hover styling and searchable settings.
 - Source and CSS lint reject direct style assignments, deprecated active-leaf access, global animation frames, native DOM creation, forced CSS overrides and broad parent selectors.
-- Release tests reject missing or stale assets; the release workflow verifies downloaded attachments before publishing.
+- CSS is bundled from `styles.css` and `src/theme/svg.css` into `dist/styles.css`, which Obsidian loads. Runtime code adds no style elements. Inline palette normalization reads these loaded rules and restores original declarations on cleanup.
+- Release tests reject missing, stale or unsupported assets. The release workflow attests the three install assets and verifies downloaded bytes and provenance before publishing.
 - `docs/examples/*.mmd` are the source of both SVG fixtures and documentation screenshots. Regenerate with `npm run build` and `npm run docs:images`.
 - A real Obsidian installation remains necessary for host integration checks.
 

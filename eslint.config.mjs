@@ -26,6 +26,15 @@ export default tseslint.config(
           message: 'Use Obsidian createEl/createDiv/createSvg helpers.',
         },
         {
+          selector:
+            'CallExpression[callee.property.name=/^create(El|Svg)$/][arguments.0.value="style"]',
+          message: 'Put all plugin CSS in styles.css; never create style elements at runtime.',
+        },
+        {
+          selector: 'CallExpression[callee.property.name="createEl"][arguments.0.value="span"]',
+          message: 'Use Obsidian createSpan for span elements.',
+        },
+        {
           selector: 'MemberExpression[property.name="activeLeaf"]',
           message: 'Use workspace.getActiveViewOfType instead of the deprecated activeLeaf.',
         },

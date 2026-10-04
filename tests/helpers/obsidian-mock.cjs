@@ -11,6 +11,9 @@ module.exports = function installObsidianMock() {
   Node.prototype.createDiv = function (options = {}) {
     return this.createEl('div', options);
   };
+  Node.prototype.createSpan = function (options = {}) {
+    return this.createEl('span', options);
+  };
   Element.prototype.empty = function () {
     this.replaceChildren();
   };

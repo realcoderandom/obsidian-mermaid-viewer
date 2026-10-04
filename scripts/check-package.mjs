@@ -1,3 +1,4 @@
+import { build } from 'esbuild';
 import { releaseNotes } from './release-utils.mjs';
 import { PACKAGE_ASSETS } from './package-assets.mjs';
 import { readFile, access } from 'node:fs/promises';
@@ -25,6 +26,7 @@ for (const name of ['main.js', ...PACKAGE_ASSETS]) {
   }
 }
 for (const name of PACKAGE_ASSETS) {
+  if (name === 'styles.css') continue;
   try {
     const source = await readFile(path.join(root, name));
     const packaged = await readFile(path.join(root, 'dist', name));
@@ -33,6 +35,15 @@ for (const name of PACKAGE_ASSETS) {
     /* Reported above. */
   }
 }
+const css = await build({
+  absWorkingDir: root,
+  entryPoints: ['styles.css'],
+  bundle: true,
+  target: 'es2022',
+  write: false,
+});
+if ((await read('dist/styles.css')) !== css.outputFiles[0].text)
+  errors.push('dist/styles.css is stale.');
 try {
   const meta = JSON.parse(await read('.build/metafile.json'));
   const imports = Object.values(meta.outputs).flatMap((output) => output.imports);

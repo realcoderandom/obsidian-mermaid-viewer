@@ -16,7 +16,7 @@ const fixtures =
     await page.setContent(
       '<style>.theme-dark .mermaid>svg{filter:invert(100%) hue-rotate(180deg) saturate(1.25)} .mermaid>svg{max-width:100%;height:auto}</style><main class="mermaid-notes"><div class="mermaid mpv-note-diagram"></div></main>',
     );
-    await page.addStyleTag({ content: fs.readFileSync(path.join(dir, 'styles.css'), 'utf8') });
+    await page.addStyleTag({ content: fs.readFileSync(path.join(dir, 'dist/styles.css'), 'utf8') });
     await page.evaluate(
       (src) => {
         const module = { exports: {} };

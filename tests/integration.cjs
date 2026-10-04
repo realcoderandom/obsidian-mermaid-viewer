@@ -16,7 +16,7 @@ const root = path.resolve(__dirname, '..');
         <section class="cm-embed-block" id="diagram-host"><div class="mermaid"></div></section>
         <section class="cm-embed-block" id="other-host">Other code block</section>
       </main>`);
-    await page.addStyleTag({ path: path.join(root, 'styles.css') });
+    await page.addStyleTag({ path: path.join(root, 'dist/styles.css') });
     await page.evaluate(require('./helpers/obsidian-mock.cjs'));
     await page.evaluate(
       ({ source, svg }) => {
@@ -118,7 +118,7 @@ const root = path.resolve(__dirname, '..');
       const colors = [getComputedStyle(rect).fill, getComputedStyle(label).color];
       const geometry = rect.style.transform === 'translateX(3px)' && label.style.width === '100px';
       theme.decorate(svg);
-      const styleCount = svg.querySelectorAll('[data-mpv-style]').length;
+      const styleCount = svg.querySelectorAll('style').length;
       theme.clean(svg);
       const exact = before === svg.innerHTML;
       theme.decorate(svg);

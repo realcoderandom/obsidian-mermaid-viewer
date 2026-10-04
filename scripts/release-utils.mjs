@@ -24,3 +24,16 @@ export async function verifyReleaseAssets(sourceDir, downloadedDir, version) {
   if (manifest.version !== version)
     throw new Error('Release asset manifest version differs from tag.');
 }
+
+export function verifyReleaseAssetList(assets) {
+  const names = assets.map((asset) => asset.name);
+  for (const name of RELEASE_ASSETS) {
+    if (!assets.some((asset) => asset.name === name && asset.size > 0))
+      throw new Error(`Release is missing ${name}.`);
+  }
+  if (
+    names.length !== RELEASE_ASSETS.length ||
+    names.some((name) => !RELEASE_ASSETS.includes(name))
+  )
+    throw new Error('Release must contain only main.js, manifest.json and styles.css.');
+}

@@ -11,4 +11,4 @@ export const PACKAGE_ASSETS = [
 ];
 
 // These files must be direct GitHub Release attachments for community installation.
-export const RELEASE_ASSETS = ['main.js', 'manifest.json', 'styles.css', 'LICENSE'];
+export const RELEASE_ASSETS = ['main.js', 'manifest.json', 'styles.css'];

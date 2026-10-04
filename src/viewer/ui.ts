@@ -25,12 +25,12 @@ export function legend(parent: HTMLElement, svg: SVGSVGElement): void {
   const el = parent.createDiv({ cls: 'mpv-diagram-legend' });
   for (const [role, info] of Object.entries(ROLES)) {
     if (!roles.has(role)) continue;
-    const item = el.createEl('span', {
+    const item = el.createSpan({
       cls: 'mpv-diagram-legend-item',
       attr: { 'data-role': role },
     });
     item.createEl('i', { attr: { 'aria-hidden': 'true' } });
-    item.createEl('span', { text: info.label });
+    item.createSpan({ text: info.label });
   }
 }
 
@@ -49,10 +49,10 @@ export function createViewerUI(
 ) {
   const header = parent.createDiv({ cls: 'mpv-diagram-header' });
   const identity = header.createDiv({ cls: 'mpv-diagram-identity' });
-  identity.createEl('span', { cls: 'mpv-diagram-kind', text: meta.kind });
+  identity.createSpan({ cls: 'mpv-diagram-kind', text: meta.kind });
   identity.createEl('h2', { text: meta.title, attr: { title: meta.title } });
   if (meta.file.replace(/^\d+[-_\s]*/, '') !== meta.title)
-    identity.createEl('span', { cls: 'mpv-diagram-file', text: meta.file });
+    identity.createSpan({ cls: 'mpv-diagram-file', text: meta.file });
   const headerActions = header.createDiv({ cls: 'mpv-diagram-actions' });
   const helpButton = iconButton(
     headerActions,
@@ -84,14 +84,14 @@ export function createViewerUI(
     ['Esc', '关闭'],
   ]) {
     const row = help.createDiv({ cls: 'mpv-help-row' });
-    row.createEl('span', { text: keys });
-    row.createEl('span', { text: label });
+    row.createSpan({ text: keys });
+    row.createSpan({ text: label });
   }
   help.hidden = true;
   // Obsidian turns aria-label into a hover tooltip; use a referenced label
   // so the canvas does not show a large tooltip over the view controls.
   const canvasLabel = `mpv-canvas-${Date.now()}`;
-  parent.createEl('span', {
+  parent.createSpan({
     cls: 'mpv-sr-only',
     text: '图表画布。滚轮平移，Ctrl 或 Command 加滚轮缩放。',
     attr: { id: canvasLabel },
@@ -120,13 +120,13 @@ export function createViewerUI(
   const actualButton = button('原始尺寸', () => actions.actualSize(), '原始尺寸（1）');
   const zoom = toolbar.createDiv({ cls: 'mpv-diagram-zoom' });
   const zoomOut = iconButton(zoom, 'minus', '缩小', () => actions.zoomCenter(1 / 1.25), signal);
-  const counter = zoom.createEl('span', {
+  const counter = zoom.createSpan({
     cls: 'mpv-diagram-scale',
     text: '100%',
     attr: { 'aria-label': '当前缩放比例' },
   });
   const zoomIn = iconButton(zoom, 'plus', '放大', () => actions.zoomCenter(1.25), signal);
-  toolbar.createEl('span', { cls: 'mpv-diagram-hint', text: '滚轮平移 · Ctrl / ⌘ + 滚轮缩放' });
+  toolbar.createSpan({ cls: 'mpv-diagram-hint', text: '滚轮平移 · Ctrl / ⌘ + 滚轮缩放' });
 
   return {
     help,

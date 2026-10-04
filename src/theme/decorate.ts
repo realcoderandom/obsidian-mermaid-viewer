@@ -1,5 +1,4 @@
 import { prepareThemeStyles, restoreThemeStyles } from './inline-styles';
-import svgStyle from './svg.css';
 import { SEMANTIC_ROLES, type Role } from './roles';
 export { ROLES } from './roles';
 
@@ -12,7 +11,7 @@ export function roleFor(classes: Iterable<string>): Role {
 }
 
 export function decorate(svg: SVGSVGElement): void {
-  if (svg.classList.contains('mpv-diagram') && svg.querySelector('[data-mpv-style]')) return;
+  if (svg.classList.contains('mpv-diagram')) return;
   clean(svg);
   svg.classList.add('mpv-diagram');
   const actorGroups = new Set(
@@ -24,17 +23,12 @@ export function decorate(svg: SVGSVGElement): void {
   svg.querySelectorAll('g.node').forEach((node) => {
     node.setAttribute('data-mpv-role', roleFor(node.classList));
   });
-  const css = svg.querySelector('text.actor, g.node')
-    ? svgStyle
-    : 'svg.mpv-diagram { background: transparent; }';
-  const themed = prepareThemeStyles(svg, css);
-  const style = svg.createSvg('style', { attr: { 'data-mpv-style': 'paper' } });
-  style.textContent = themed;
+  if (svg.querySelector('text.actor, g.node')) svg.classList.add('mpv-palette');
+  prepareThemeStyles(svg);
 }
 
 export function clean(svg: SVGSVGElement): void {
   restoreThemeStyles(svg);
-  svg.querySelectorAll('[data-mpv-style]').forEach((el) => el.remove());
   svg.querySelectorAll('[data-mpv-role]').forEach((el) => el.removeAttribute('data-mpv-role'));
-  svg.classList.remove('mpv-diagram');
+  svg.classList.remove('mpv-diagram', 'mpv-palette');
 }

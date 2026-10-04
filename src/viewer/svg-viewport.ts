@@ -1,8 +1,5 @@
 import type { Size } from './camera';
 
-const SHADOW_STYLE =
-  ':host{display:block}svg{display:block;max-width:none;max-height:none}.mpv-svg-viewport{width:100%;height:100%;overflow:hidden}p{margin:0}';
-
 export function createSvgViewport(
   source: SVGSVGElement,
   canvas: HTMLElement,
@@ -11,10 +8,8 @@ export function createSvgViewport(
   content: SVGSVGElement;
   bounds: Size;
 } {
-  const shadow = canvas.attachShadow({ mode: 'open' });
-  const style = shadow.createEl('style');
-  style.textContent = SHADOW_STYLE;
   const content = source.cloneNode(true) as SVGSVGElement;
+  content.classList.add('mpv-svg-content');
   const box = source.viewBox.baseVal;
   const rect = source.getBoundingClientRect();
   const valid = (...values: number[]) =>
@@ -35,7 +30,7 @@ export function createSvgViewport(
     maxHeight: 'none',
     overflow: 'hidden',
   });
-  const viewport = shadow.createSvg('svg', { cls: 'mpv-svg-viewport' });
+  const viewport = canvas.createSvg('svg', { cls: 'mpv-svg-viewport' });
   viewport.setAttribute('preserveAspectRatio', 'none');
   viewport.appendChild(content);
   return { viewport, content, bounds };

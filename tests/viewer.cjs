@@ -17,7 +17,7 @@ const dir = path.resolve(__dirname, '..');
     await page.setContent(
       `<style>*{box-sizing:border-box}.theme-dark .mermaid > svg{filter:invert(100%) hue-rotate(180deg) saturate(1.25)}body{background:#202020;color:#ddd;--background-primary:#202020;--background-modifier-border:#777;--text-muted:#aaa;--font-mermaid:Arial;--font-ui-small:13px}.modal-container{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000a}.modal{background:#202020}.mermaid-notes{width:700px}.mermaid svg{max-width:100%;height:auto}</style><main class="mermaid-notes markdown-preview-view"><h2>请求处理过程</h2><div class="mermaid">${svg}</div></main><aside><div class="mermaid">${svg}</div></aside>`,
     );
-    await page.addStyleTag({ content: fs.readFileSync(dir + '/styles.css', 'utf8') });
+    await page.addStyleTag({ content: fs.readFileSync(dir + '/dist/styles.css', 'utf8') });
     await page.evaluate(require('./helpers/obsidian-mock.cjs'));
     await page.evaluate(
       ({ theme, main }) => {
@@ -34,6 +34,17 @@ const dir = path.resolve(__dirname, '..');
         main: fs.readFileSync(dir + '/dist/main.js', 'utf8'),
       },
     );
+    // Fail on any plugin-created style element; Mermaid's existing SVG style is retained.
+    await page.evaluate(() => {
+      for (const method of ['createElement', 'createElementNS']) {
+        const native = Document.prototype[method];
+        Document.prototype[method] = function (...args) {
+          const tag = args[method === 'createElementNS' ? 1 : 0];
+          if (tag.toLowerCase() === 'style') throw Error('Runtime style injection');
+          return native.apply(this, args);
+        };
+      }
+    });
     await page.evaluate(async () => {
       window.viewer = new module.exports.default();
       await viewer.onload();
@@ -48,7 +59,7 @@ const dir = path.resolve(__dirname, '..');
     await page.waitForFunction(() =>
       document
         .querySelector('.mpv-diagram-canvas')
-        ?.shadowRoot.querySelector('.mpv-svg-viewport')
+        ?.querySelector('.mpv-svg-viewport')
         ?.hasAttribute('viewBox'),
     );
     await page.evaluate(() => {
@@ -103,24 +114,28 @@ const dir = path.resolve(__dirname, '..');
         h: m.camera.bounds.height * m.camera.scale,
         sw: s.width,
         sh: s.height,
-        shadow: !!m.ui.canvas.shadowRoot.querySelector('svg'),
+        viewport: !!m.ui.canvas.querySelector('svg') && !m.ui.canvas.shadowRoot,
+        styles: m.ui.canvas.querySelectorAll('style').length,
+        originalStyles: document.querySelector('main .mermaid > svg').querySelectorAll('style')
+          .length,
         originalWidth: document.querySelector('main .mermaid > svg').getAttribute('width'),
       };
     });
-    assert(fit.w <= fit.sw && fit.h <= fit.sh && fit.shadow);
+    assert.equal(fit.styles, fit.originalStyles, 'viewer must not add SVG styles');
+    assert(fit.w <= fit.sw && fit.h <= fit.sh && fit.viewport);
     await page.evaluate(() => [...viewer.modals][0].fitWidth());
     await page.screenshot({ path: path.join(dir, 'previews', fixture + '-paper-fullscreen.png') });
     await page.evaluate(() => [...viewer.modals][0].fit());
     const light = await page.evaluate(() => {
       const m = [...viewer.modals][0];
-      return getComputedStyle(m.ui.canvas.shadowRoot.querySelector('g[data-mpv-role] rect')).fill;
+      return getComputedStyle(m.ui.canvas.querySelector('g[data-mpv-role] rect')).fill;
     });
     await page.evaluate(() => document.body.classList.add('theme-dark'));
     await new Promise((r) => setTimeout(r, 180));
 
     const dark = await page.evaluate(() => {
       const m = [...viewer.modals][0];
-      return getComputedStyle(m.ui.canvas.shadowRoot.querySelector('g[data-mpv-role] rect')).fill;
+      return getComputedStyle(m.ui.canvas.querySelector('g[data-mpv-role] rect')).fill;
     });
     assert.equal(light, dark, 'diagram palette must stay light when the vault switches theme');
     const appearance = await page.evaluate(() => {
@@ -332,12 +347,12 @@ const dir = path.resolve(__dirname, '..');
       for (let i = 0; i < 10; i++) themeModule.decorate(svg);
     });
     assert.equal(
-      await page.$$eval('main svg [data-mpv-style]', (els) => els.length),
+      await page.$$eval('main svg.mpv-diagram.mpv-palette', (els) => els.length),
       1,
       'decoration must be idempotent',
     );
     assert.equal(
-      await page.$$eval('aside svg [data-mpv-style]', (els) => els.length),
+      await page.$$eval('aside svg.mpv-diagram', (els) => els.length),
       0,
       'unscoped notes remain unchanged',
     );
@@ -371,7 +386,7 @@ const dir = path.resolve(__dirname, '..');
       await viewer.onload();
     });
     assert.equal(await page.$$eval('main .mpv-mermaid-open', (els) => els.length), 0);
-    assert.equal(await page.$$eval('main [data-mpv-style]', (els) => els.length), 0);
+    assert.equal(await page.$$eval('main svg.mpv-diagram', (els) => els.length), 0);
     assert.equal(await page.$$eval('aside .mpv-mermaid-open', (els) => els.length), 1);
     // Storage failure must preserve the active settings and visible controls.
     await page.evaluate(async () => {

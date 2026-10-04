@@ -10,13 +10,31 @@ interface SavedStyle {
 }
 const originals = new WeakMap<SVGSVGElement, SavedStyle[]>();
 
-export function prepareThemeStyles(svg: SVGSVGElement, css: string): string {
-  const win = svg.ownerDocument.defaultView ?? window;
-  const sheet = new win.CSSStyleSheet();
-  sheet.replaceSync(css);
+// Read the rules Obsidian already loaded from styles.css. Cache by stylesheet,
+// so observing more diagrams does not repeatedly walk the host's entire CSS.
+const rulesBySheet = new WeakMap<CSSStyleSheet, CSSStyleRule[]>();
+function themeRules(doc: Document): CSSStyleRule[] {
+  return Array.from(doc.styleSheets).flatMap((sheet) => {
+    const cached = rulesBySheet.get(sheet);
+    if (cached) return cached;
+    const rules: CSSStyleRule[] = [];
+    try {
+      for (const rule of Array.from(sheet.cssRules)) {
+        if (rule.type !== CSSRule.STYLE_RULE) continue;
+        const style = rule as CSSStyleRule;
+        if (style.selectorText.startsWith('svg.mpv-diagram')) rules.push(style);
+      }
+    } catch {
+      // Cross-origin theme sheets can be unreadable. Our local stylesheet is not.
+    }
+    rulesBySheet.set(sheet, rules);
+    return rules;
+  });
+}
+
+export function prepareThemeStyles(svg: SVGSVGElement): void {
   const saved = new Map<StyledElement, SavedStyle>();
-  for (const rule of Array.from(sheet.cssRules)) {
-    if (!(rule instanceof win.CSSStyleRule)) continue;
+  for (const rule of themeRules(svg.ownerDocument)) {
     const elements = Array.from(svg.querySelectorAll<StyledElement>(rule.selectorText));
     if (svg.matches(rule.selectorText)) elements.unshift(svg);
     for (const element of elements) {
@@ -44,11 +62,6 @@ export function prepareThemeStyles(svg: SVGSVGElement, css: string): string {
   }
   for (const record of saved.values()) record.themed = record.element.style.cssText;
   originals.set(svg, [...saved.values()]);
-  // Mermaid scopes its own rules with an ID. Use that same ID plus our class,
-  // so normal CSS specificity suffices without overriding the whole vault.
-  return svg.id
-    ? css.replaceAll('svg.mpv-diagram', `svg#${win.CSS.escape(svg.id)}.mpv-diagram`)
-    : css;
 }
 
 export function restoreThemeStyles(svg: SVGSVGElement): void {

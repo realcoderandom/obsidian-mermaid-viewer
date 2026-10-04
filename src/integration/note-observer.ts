@@ -98,7 +98,7 @@ export class NoteObserver {
       let bar = container.querySelector<HTMLElement>(':scope > .mpv-mermaid-cardbar');
       if (!bar) {
         bar = container.createDiv({ cls: 'mpv-mermaid-cardbar', prepend: true });
-        bar.createEl('span', { cls: 'mpv-mermaid-caption' });
+        bar.createSpan({ cls: 'mpv-mermaid-caption' });
         const button = bar.createEl('button', {
           cls: 'mpv-mermaid-open',
           attr: {
@@ -108,7 +108,7 @@ export class NoteObserver {
           },
         });
         setIcon(button, 'maximize-2');
-        button.createEl('span', { text: '全屏查看' });
+        button.createSpan({ text: '全屏查看' });
       }
       const caption = bar.querySelector<HTMLElement>('.mpv-mermaid-caption');
       const text = `${meta.kind} · ${meta.title}`;

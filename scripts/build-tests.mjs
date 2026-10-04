@@ -15,5 +15,4 @@ await build({
   target: 'node22',
   bundle: true,
   external: ['obsidian'],
-  loader: { '.css': 'text' },
 });

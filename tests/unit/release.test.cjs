@@ -29,7 +29,6 @@ test('release verification rejects missing, stale and mismatched install assets'
       'main.js': 'plugin bundle',
       'manifest.json': '{"version":"1.5.2"}',
       'styles.css': '.diagram {}',
-      LICENSE: 'MIT License',
     };
     for (const [name, bytes] of Object.entries(files)) {
       await fs.writeFile(path.join(source, name), bytes);
@@ -45,4 +44,14 @@ test('release verification rejects missing, stale and mismatched install assets'
   } finally {
     await fs.rm(root, { recursive: true, force: true });
   }
+});
+
+test('release lists reject unsupported attachments, missing assets and duplicates', async () => {
+  const { verifyReleaseAssetList } = await utils;
+  const valid = ['main.js', 'manifest.json', 'styles.css'].map((name) => ({ name, size: 1 }));
+  verifyReleaseAssetList(valid);
+  assert.throws(() => verifyReleaseAssetList([...valid, { name: 'LICENSE', size: 1 }]), /only/);
+  assert.throws(() => verifyReleaseAssetList(valid.slice(1)), /missing main.js/);
+  assert.throws(() => verifyReleaseAssetList([...valid, valid[0]]), /only/);
+  assert.throws(() => verifyReleaseAssetList(valid.map((a) => ({ ...a, size: 0 }))), /missing/);
 });
