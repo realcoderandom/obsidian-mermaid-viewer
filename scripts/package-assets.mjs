@@ -9,3 +9,6 @@ export const PACKAGE_ASSETS = [
   'docs/images/fullscreen-flow.png',
   'docs/images/fullscreen-sequence.png',
 ];
+
+// These files must be direct GitHub Release attachments for community installation.
+export const RELEASE_ASSETS = ['main.js', 'manifest.json', 'styles.css', 'LICENSE'];

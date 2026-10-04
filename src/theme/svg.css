@@ -1,146 +1,146 @@
 svg.mpv-diagram {
-  background: transparent !important;
+  background: transparent;
   color: var(--mpv-text, #141413);
-  font-family: var(--mpv-font, Arial, sans-serif) !important;
+  font-family: var(--mpv-font, Arial, sans-serif);
 }
 svg.mpv-diagram text,
 svg.mpv-diagram foreignObject,
 svg.mpv-diagram .nodeLabel {
-  font-family: var(--mpv-font, Arial, sans-serif) !important;
+  font-family: var(--mpv-font, Arial, sans-serif);
 }
 svg.mpv-diagram text,
 svg.mpv-diagram .nodeLabel,
 svg.mpv-diagram .nodeLabel p,
 svg.mpv-diagram .nodeLabel span {
-  fill: var(--mpv-text, #141413) !important;
-  color: var(--mpv-text, #141413) !important;
+  fill: var(--mpv-text, #141413);
+  color: var(--mpv-text, #141413);
 }
 svg.mpv-diagram .actor-line {
-  stroke: var(--mpv-lifeline, #aaa79d) !important;
-  stroke-width: 1px !important;
-  stroke-dasharray: none !important;
+  stroke: var(--mpv-lifeline, #aaa79d);
+  stroke-width: 1px;
+  stroke-dasharray: none;
   vector-effect: none;
 }
 svg.mpv-diagram rect.actor {
-  fill: var(--mpv-service-bg, #eef2f7) !important;
-  stroke: var(--mpv-service-border, #1b365d) !important;
-  stroke-width: 1px !important;
+  fill: var(--mpv-service-bg, #eef2f7);
+  stroke: var(--mpv-service-border, #1b365d);
+  stroke-width: 1px;
   rx: 8px;
   ry: 8px;
 }
 svg.mpv-diagram text.actor {
-  font-weight: 600 !important;
+  font-weight: 600;
 }
 svg.mpv-diagram .messageLine0,
 svg.mpv-diagram .messageLine1,
 svg.mpv-diagram .flowchart-link {
-  stroke: var(--mpv-line, #504e49) !important;
-  stroke-width: 1.35px !important;
+  stroke: var(--mpv-line, #504e49);
+  stroke-width: 1.35px;
 }
 svg.mpv-diagram .messageText,
 svg.mpv-diagram .edgeLabel,
 svg.mpv-diagram .edgeLabel p {
-  fill: var(--mpv-text, #141413) !important;
-  color: var(--mpv-text, #141413) !important;
+  fill: var(--mpv-text, #141413);
+  color: var(--mpv-text, #141413);
 }
 svg.mpv-diagram .edgeLabel p,
 svg.mpv-diagram .edgeLabel .labelBkg {
-  background: var(--mpv-surface, #faf9f5) !important;
+  background: var(--mpv-surface, #faf9f5);
 }
 svg.mpv-diagram marker path {
-  fill: var(--mpv-line, #504e49) !important;
-  stroke: var(--mpv-line, #504e49) !important;
+  fill: var(--mpv-line, #504e49);
+  stroke: var(--mpv-line, #504e49);
 }
 svg.mpv-diagram .sequenceNumber {
-  fill: var(--mpv-on-accent, #faf9f5) !important;
+  fill: var(--mpv-on-accent, #faf9f5);
 }
 svg.mpv-diagram marker[id$='sequencenumber'] circle {
-  fill: var(--mpv-accent, #1b365d) !important;
+  fill: var(--mpv-accent, #1b365d);
 }
 svg.mpv-diagram .loopLine {
-  stroke: var(--mpv-border, #d6d3c7) !important;
-  stroke-width: 1px !important;
+  stroke: var(--mpv-border, #d6d3c7);
+  stroke-width: 1px;
 }
 svg.mpv-diagram .labelBox {
-  fill: var(--mpv-subtle, #e8e6dc) !important;
-  stroke: var(--mpv-border, #d6d3c7) !important;
+  fill: var(--mpv-subtle, #e8e6dc);
+  stroke: var(--mpv-border, #d6d3c7);
 }
 svg.mpv-diagram .labelText,
 svg.mpv-diagram .loopText,
 svg.mpv-diagram .loopText tspan {
-  fill: var(--mpv-muted, #504e49) !important;
+  fill: var(--mpv-muted, #504e49);
 }
 svg.mpv-diagram rect.note {
-  fill: var(--mpv-note-bg, #e8e6dc) !important;
-  stroke: var(--mpv-note-border, #8c897c) !important;
+  fill: var(--mpv-note-bg, #e8e6dc);
+  stroke: var(--mpv-note-border, #8c897c);
   rx: 6px;
   ry: 6px;
 }
 svg.mpv-diagram .noteText,
 svg.mpv-diagram .noteText tspan {
-  fill: var(--mpv-note-text, #3d3d3a) !important;
+  fill: var(--mpv-note-text, #3d3d3a);
 }
 svg.mpv-diagram rect.rect {
-  fill: var(--mpv-band, #e8e6dc) !important;
-  opacity: 0.5 !important;
+  fill: var(--mpv-band, #e8e6dc);
+  opacity: 0.5;
 }
 svg.mpv-diagram .node > rect,
 svg.mpv-diagram .node > polygon,
 svg.mpv-diagram .node > circle,
 svg.mpv-diagram .node > path {
-  fill: var(--mpv-service-bg, #eef2f7) !important;
-  stroke: var(--mpv-service-border, #1b365d) !important;
-  stroke-width: 1px !important;
+  fill: var(--mpv-service-bg, #eef2f7);
+  stroke: var(--mpv-service-border, #1b365d);
+  stroke-width: 1px;
 }
 svg.mpv-diagram .node > rect {
   rx: 6px;
   ry: 6px;
 }
 svg.mpv-diagram .cluster rect {
-  fill: var(--mpv-surface) !important;
-  stroke: var(--mpv-border) !important;
+  fill: var(--mpv-surface);
+  stroke: var(--mpv-border);
 }
 svg.mpv-diagram rect[class^='activation'] {
-  fill: var(--mpv-cache-bg) !important;
-  stroke: var(--mpv-cache-border) !important;
+  fill: var(--mpv-cache-bg);
+  stroke: var(--mpv-cache-border);
 }
 svg.mpv-diagram .edgeLabel rect {
-  fill: var(--mpv-surface) !important;
-  opacity: 1 !important;
+  fill: var(--mpv-surface);
+  opacity: 1;
 }
 svg.mpv-diagram .edgeLabel foreignObject div {
-  background: var(--mpv-surface) !important;
-  color: var(--mpv-text) !important;
+  background: var(--mpv-surface);
+  color: var(--mpv-text);
 }
 svg.mpv-diagram g[data-mpv-role] > rect,
 svg.mpv-diagram g[data-mpv-role] > polygon,
 svg.mpv-diagram g[data-mpv-role] > circle,
 svg.mpv-diagram g[data-mpv-role] > path,
 svg.mpv-diagram g[data-mpv-role] .actor-man circle {
-  fill: var(--mpv-role-bg) !important;
-  stroke: var(--mpv-role-border) !important;
+  fill: var(--mpv-role-bg);
+  stroke: var(--mpv-role-border);
 }
 svg.mpv-diagram g[data-mpv-role] text.actor,
 svg.mpv-diagram g[data-mpv-role] text.actor tspan,
 svg.mpv-diagram g[data-mpv-role] .nodeLabel,
 svg.mpv-diagram g[data-mpv-role] .nodeLabel p,
 svg.mpv-diagram g[data-mpv-role] .nodeLabel span {
-  fill: var(--mpv-role-text) !important;
-  color: var(--mpv-role-text) !important;
+  fill: var(--mpv-role-text);
+  color: var(--mpv-role-text);
 }
 svg.mpv-diagram g[data-mpv-role] .actor-man line {
-  stroke: var(--mpv-role-border) !important;
+  stroke: var(--mpv-role-border);
 }
 
 /* Stick-figure captions sit on paper, outside any filled participant box. */
 svg.mpv-diagram g.actor-man[data-mpv-role] > line {
-  stroke: var(--mpv-accent) !important;
+  stroke: var(--mpv-accent);
 }
 svg.mpv-diagram g.actor-man[data-mpv-role] text.actor,
 svg.mpv-diagram g.actor-man[data-mpv-role] text.actor tspan {
-  fill: var(--mpv-text) !important;
-  color: var(--mpv-text) !important;
-  stroke: none !important;
+  fill: var(--mpv-text);
+  color: var(--mpv-text);
+  stroke: none;
 }
 svg.mpv-diagram g[data-mpv-role='entry'] {
   --mpv-role-bg: var(--mpv-entry-bg);

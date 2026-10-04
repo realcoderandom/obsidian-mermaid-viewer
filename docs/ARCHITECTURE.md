@@ -26,13 +26,15 @@
 7. Obsidian Scope handles Escape: close help before closing the viewer.
 8. Node colors depend on semantic classes, not labels or application-specific names.
 9. Initial camera layout is synchronous. Paused background animation frames must not leave an uninitialized viewport.
-10. Live Preview overrides apply only to a host containing an owned `.mermaid.mpv-note-diagram`. Native source-edit actions keep their original behavior.
+10. Live Preview overrides apply only to a host containing an owned `.mermaid.mpv-note-diagram` and `.mpv-mermaid-embed` classes. Native source-edit actions keep their original behavior.
 
 ## Verification
 
 - Unit tests exercise camera geometry, scope normalization and semantic roles.
 - Browser tests exercise the built bundle with the API mock in `tests/helpers/`.
-- Theme tests check contrast, actor bounds and host-theme invariance.
+- Theme tests check contrast, actor bounds and host-theme invariance. Integration checks cover exact style restoration, concurrent DOM edits, scoped hover styling and searchable settings.
+- Source and CSS lint reject direct style assignments, deprecated active-leaf access, global animation frames, native DOM creation, forced CSS overrides and broad parent selectors.
+- Release tests reject missing or stale assets; the release workflow verifies downloaded attachments before publishing.
 - `docs/examples/*.mmd` are the source of both SVG fixtures and documentation screenshots. Regenerate with `npm run build` and `npm run docs:images`.
 - A real Obsidian installation remains necessary for host integration checks.
 

@@ -1,4 +1,4 @@
-import { Notice, Plugin } from 'obsidian';
+import { MarkdownView, Notice, Plugin } from 'obsidian';
 import { diagramMetadata } from './diagram/metadata';
 import { NoteObserver } from './integration/note-observer';
 import {
@@ -34,7 +34,7 @@ export default class MermaidViewer extends Plugin {
       id: 'open-current-diagram',
       name: '全屏查看当前笔记的 Mermaid 图',
       callback: () => {
-        const scope = this.app.workspace.activeLeaf?.view.containerEl;
+        const scope = this.app.workspace.getActiveViewOfType(MarkdownView)?.containerEl;
         const diagrams = Array.from(
           scope?.querySelectorAll<SVGSVGElement>('.mermaid > svg') ?? [],
         ).filter((svg) => this.notes?.eligible(svg));

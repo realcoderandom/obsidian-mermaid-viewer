@@ -1,3 +1,4 @@
+import { prepareThemeStyles, restoreThemeStyles } from './inline-styles';
 import svgStyle from './svg.css';
 import { SEMANTIC_ROLES, type Role } from './roles';
 export { ROLES } from './roles';
@@ -23,15 +24,16 @@ export function decorate(svg: SVGSVGElement): void {
   svg.querySelectorAll('g.node').forEach((node) => {
     node.setAttribute('data-mpv-role', roleFor(node.classList));
   });
-  const style = svg.ownerDocument.createElementNS('http://www.w3.org/2000/svg', 'style');
-  style.setAttribute('data-mpv-style', 'paper');
-  style.textContent = svg.querySelector('text.actor, g.node')
+  const css = svg.querySelector('text.actor, g.node')
     ? svgStyle
-    : 'svg.mpv-diagram { background: transparent !important; }';
-  svg.appendChild(style);
+    : 'svg.mpv-diagram { background: transparent; }';
+  const themed = prepareThemeStyles(svg, css);
+  const style = svg.createSvg('style', { attr: { 'data-mpv-style': 'paper' } });
+  style.textContent = themed;
 }
 
 export function clean(svg: SVGSVGElement): void {
+  restoreThemeStyles(svg);
   svg.querySelectorAll('[data-mpv-style]').forEach((el) => el.remove());
   svg.querySelectorAll('[data-mpv-role]').forEach((el) => el.removeAttribute('data-mpv-role'));
   svg.classList.remove('mpv-diagram');

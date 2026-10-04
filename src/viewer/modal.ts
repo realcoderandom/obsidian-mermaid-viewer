@@ -60,14 +60,14 @@ export class DiagramModal extends Modal {
       this,
     );
     this.resize = new ResizeObserver(() => {
-      cancelAnimationFrame(this.resizeFrame);
-      this.resizeFrame = requestAnimationFrame(() => {
+      this.containerEl.win.cancelAnimationFrame(this.resizeFrame);
+      this.resizeFrame = this.containerEl.win.requestAnimationFrame(() => {
         this.camera.resize(this.ui.canvas.getBoundingClientRect());
         this.render();
       });
     });
     this.resize.observe(this.ui.stage);
-    this.frame = requestAnimationFrame(() => {
+    this.frame = this.containerEl.win.requestAnimationFrame(() => {
       this.focus();
     });
   }
@@ -106,8 +106,8 @@ export class DiagramModal extends Modal {
   onClose(): void {
     if (this.closed) return;
     this.closed = true;
-    cancelAnimationFrame(this.frame);
-    cancelAnimationFrame(this.resizeFrame);
+    this.containerEl.win.cancelAnimationFrame(this.frame);
+    this.containerEl.win.cancelAnimationFrame(this.resizeFrame);
     this.resize?.disconnect();
     this.input?.dispose();
     this.events.abort();

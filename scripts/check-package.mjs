@@ -1,3 +1,4 @@
+import { releaseNotes } from './release-utils.mjs';
 import { PACKAGE_ASSETS } from './package-assets.mjs';
 import { readFile, access } from 'node:fs/promises';
 import path from 'node:path';
@@ -41,6 +42,11 @@ try {
   errors.push('Build metadata missing; rebuild before checking.');
 }
 if (process.argv.includes('--release')) {
+  try {
+    releaseNotes(await read('CHANGELOG.md'), manifest.version);
+  } catch (error) {
+    errors.push(error.message);
+  }
   if (!manifest.author || manifest.author === 'Local')
     errors.push('Set a public author name in manifest.json.');
   if (!/^[A-Za-z0-9 ()+-]+$/.test(manifest.name))

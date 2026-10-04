@@ -10,19 +10,19 @@ Checked against the [official submission guide](https://docs.obsidian.md/Plugins
 - Check the declared `minAppVersion` on that version or raise it to one that has actually been validated. Test mobile devices or set `isDesktopOnly: true` for a desktop-only first release.
 - Keep generated builds, local backups, machine settings and dependencies out of Git. The examples and images under `docs/` are fictional and reproducible.
 
-No remote repository, public release or directory submission is created by the local development scripts.
+Build and local-install commands do not publish anything. Only the release workflow (or an explicit run of `scripts/publish-release.mjs`) publishes a GitHub Release; community submission remains a separate step.
 
 ## Steps
 
 1. Use this project directory as the root of a public GitHub repository. Include README, source, tests, manifest, lockfile and the chosen LICENSE.
 2. Run `npm ci`, `npm run check` and `npm run release:check`. The last command reports unfinished public metadata and licensing separately from engineering checks.
-3. Synchronize versions with `npm run version:set -- 1.5.1`, then build. Commit the source and manifest to the default branch.
-4. Push a tag matching `manifest.version` exactly, for example `1.5.1`, without a `v` prefix. The release workflow checks the package and creates a draft.
-5. Inspect and publish the GitHub Release. Attach `main.js`, `manifest.json`, `styles.css` and `LICENSE` directly from `dist/`; a zip alone is not enough.
+3. Synchronize versions with `npm run version:set -- 1.5.2`, then build. Commit the source and manifest to the default branch.
+4. Push a tag matching `manifest.version` exactly, for example `1.5.2`, without a `v` prefix. The release workflow checks the package, creates or updates a draft, downloads and verifies every installation asset, and then publishes it.
+5. Confirm that the Release workflow succeeded. The public Release must contain `main.js`, `manifest.json`, `styles.css` and `LICENSE` as direct attachments. The workflow supplies a versioned title and notes from the matching CHANGELOG entry; do not create a separate empty Release.
 6. Sign in at [Obsidian Community](https://community.obsidian.md/), link GitHub and add the plugin repository. The directory reads the default branch's manifest and the corresponding Release assets.
 7. Resolve review feedback, increment the version and publish another Release as needed. The plugin becomes installable after review errors are resolved and the entry is published.
 
-The workflows in `.github/workflows/` run CI and create Release drafts; they do not automatically publish or submit the plugin. Remote workflow execution has not been verified yet.
+Pushing a version tag authorizes the Release workflow to publish that checked version. Failed asset verification leaves the release as a draft. The workflow never submits the plugin to the community directory.
 
 ## References
 

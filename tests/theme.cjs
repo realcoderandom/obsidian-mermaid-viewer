@@ -12,6 +12,7 @@ const fixtures =
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
+    await page.evaluate(require('./helpers/obsidian-mock.cjs'));
     await page.setContent(
       '<style>.theme-dark .mermaid>svg{filter:invert(100%) hue-rotate(180deg) saturate(1.25)} .mermaid>svg{max-width:100%;height:auto}</style><main class="mermaid-notes"><div class="mermaid mpv-note-diagram"></div></main>',
     );

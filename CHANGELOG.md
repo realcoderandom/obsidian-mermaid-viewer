@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.5.2
+
+- Publish complete, verified GitHub Release assets with a versioned title and release notes.
+- Use Obsidian DOM helpers, owning-window animation frames and the active Markdown view API.
+- Make settings searchable on Obsidian 1.13+, retaining the settings UI on older versions.
+- Replace forced CSS overrides with scoped rules and reversible inline-style normalization.
+- Remove broad hover selectors, clip-path and duplicate height declarations while preserving the light canvas and stable zoom.
+- Add CSS and source checks plus regression coverage for styling, settings, Live Preview cleanup and release attachments.
+
 ## 1.5.1
 
 - Rename the plugin and package to Mermaid Viewer (`mermaid-viewer`).

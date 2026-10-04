@@ -8,6 +8,7 @@ export class NoteObserver {
   private readonly owned = new Map<HTMLElement, SVGSVGElement>();
   private readonly observer: MutationObserver;
   private pending = 0;
+  private readonly embeds = new Set<HTMLElement>();
   private stopped = false;
   private readonly click: (event: MouseEvent) => void;
 
@@ -69,7 +70,7 @@ export class NoteObserver {
 
   private schedule(): void {
     if (this.stopped || this.pending) return;
-    this.pending = requestAnimationFrame(() => {
+    this.pending = this.root.win.requestAnimationFrame(() => {
       this.pending = 0;
       this.scan();
     });
@@ -96,8 +97,7 @@ export class NoteObserver {
       const meta = this.metadata(svg);
       let bar = container.querySelector<HTMLElement>(':scope > .mpv-mermaid-cardbar');
       if (!bar) {
-        bar = container.ownerDocument.createElement('div');
-        bar.className = 'mpv-mermaid-cardbar';
+        bar = container.createDiv({ cls: 'mpv-mermaid-cardbar', prepend: true });
         bar.createEl('span', { cls: 'mpv-mermaid-caption' });
         const button = bar.createEl('button', {
           cls: 'mpv-mermaid-open',
@@ -109,7 +109,6 @@ export class NoteObserver {
         });
         setIcon(button, 'maximize-2');
         button.createEl('span', { text: '全屏查看' });
-        container.prepend(bar);
       }
       const caption = bar.querySelector<HTMLElement>('.mpv-mermaid-caption');
       const text = `${meta.kind} · ${meta.title}`;
@@ -118,6 +117,27 @@ export class NoteObserver {
         caption.title = meta.title;
       }
     }
+    this.syncEmbeds();
+  }
+
+  private syncEmbeds(): void {
+    const current = new Set<HTMLElement>();
+    for (const container of this.owned.keys()) {
+      const host = container.parentElement;
+      if (!host?.matches('.cm-embed-block')) continue;
+      current.add(host);
+      host.classList.add('mpv-mermaid-embed');
+      host.classList.toggle(
+        'mpv-mermaid-embed-with-actions',
+        !!host.querySelector(':scope > .embed-actions'),
+      );
+    }
+    for (const host of this.embeds) {
+      if (!current.has(host))
+        host.classList.remove('mpv-mermaid-embed', 'mpv-mermaid-embed-with-actions');
+    }
+    this.embeds.clear();
+    current.forEach((host) => this.embeds.add(host));
   }
 
   private remove(container: HTMLElement, svg: SVGSVGElement): void {
@@ -129,9 +149,10 @@ export class NoteObserver {
   dispose(): void {
     this.stopped = true;
     this.observer.disconnect();
-    cancelAnimationFrame(this.pending);
+    this.root.win.cancelAnimationFrame(this.pending);
     this.root.removeEventListener('click', this.click);
     for (const [container, svg] of this.owned) this.remove(container, svg);
     this.owned.clear();
+    this.syncEmbeds();
   }
 }

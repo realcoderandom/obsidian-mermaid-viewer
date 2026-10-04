@@ -1,24 +1,44 @@
 module.exports = function installObsidianMock() {
-  Element.prototype.createEl = function (tag, options = {}) {
-    const e = document.createElement(tag);
+  Node.prototype.createEl = function (tag, options = {}) {
+    const e = (this.ownerDocument ?? document).createElement(tag);
     if (options.cls) e.className = options.cls;
     if (options.text) e.textContent = options.text;
     for (const [k, v] of Object.entries(options.attr || {})) e.setAttribute(k, v);
-    this.appendChild(e);
+    if (options.prepend) this.prepend(e);
+    else this.appendChild(e);
     return e;
   };
-  Element.prototype.createDiv = function (options = {}) {
+  Node.prototype.createDiv = function (options = {}) {
     return this.createEl('div', options);
   };
   Element.prototype.empty = function () {
     this.replaceChildren();
   };
+  Node.prototype.createSvg = function (tag, options = {}) {
+    const e = (this.ownerDocument ?? document).createElementNS('http://www.w3.org/2000/svg', tag);
+    if (options.cls) e.setAttribute('class', options.cls);
+    for (const [k, v] of Object.entries(options.attr || {})) e.setAttribute(k, v);
+    this.appendChild(e);
+    return e;
+  };
+  Object.defineProperty(Node.prototype, 'win', {
+    configurable: true,
+    get() {
+      return this.ownerDocument?.defaultView ?? window;
+    },
+  });
+  const setCssStyles = function (styles) {
+    Object.assign(this.style, styles);
+  };
+  HTMLElement.prototype.setCssStyles = SVGElement.prototype.setCssStyles = setCssStyles;
+  class MarkdownView {}
   class Plugin {
     constructor() {
       this.app = {
         workspace: {
           containerEl: document.body,
           onLayoutReady: (fn) => fn(),
+          getActiveViewOfType: () => ({ containerEl: document.querySelector('main') }),
           getLeavesOfType: () => [
             {
               containerEl: document.querySelector('main'),
@@ -45,7 +65,9 @@ module.exports = function installObsidianMock() {
       el.addEventListener(type, fn);
       this.register(() => el.removeEventListener(type, fn));
     }
-    addCommand() {}
+    addCommand(command) {
+      this.command = command;
+    }
     unload() {
       this.onunload();
       this.cleanups.forEach((f) => f());
@@ -110,6 +132,7 @@ module.exports = function installObsidianMock() {
   };
   window.obsidianMock = {
     Plugin,
+    MarkdownView,
     Modal,
     Scope,
     PluginSettingTab: class {
@@ -119,7 +142,40 @@ module.exports = function installObsidianMock() {
         this.containerEl = document.createElement('div');
       }
     },
-    Setting: class {},
+    Setting: class {
+      constructor(parent) {
+        this.settingEl = parent.createDiv({ cls: 'setting-item' });
+        this.nameEl = this.settingEl.createDiv({ cls: 'setting-item-name' });
+        this.descEl = this.settingEl.createDiv({ cls: 'setting-item-description' });
+      }
+      setName(value) {
+        this.nameEl.textContent = value;
+        return this;
+      }
+      setDesc(value) {
+        this.descEl.textContent = value;
+        return this;
+      }
+      addText(callback) {
+        const inputEl = this.settingEl.createEl('input');
+        const text = {
+          inputEl,
+          setPlaceholder(value) {
+            inputEl.placeholder = value;
+            return this;
+          },
+          setValue(value) {
+            inputEl.value = value;
+            return this;
+          },
+          getValue() {
+            return inputEl.value;
+          },
+        };
+        callback(text);
+        return this;
+      }
+    },
     Notice: class {},
     setIcon,
   };

@@ -1,8 +1,7 @@
 import type { Size } from './camera';
 
-const SVG_NS = 'http://www.w3.org/2000/svg';
 const SHADOW_STYLE =
-  ':host{display:block}svg{display:block;max-width:none!important;max-height:none!important}.mpv-svg-viewport{width:100%;height:100%;overflow:hidden}p{margin:0}';
+  ':host{display:block}svg{display:block;max-width:none;max-height:none}.mpv-svg-viewport{width:100%;height:100%;overflow:hidden}p{margin:0}';
 
 export function createSvgViewport(
   source: SVGSVGElement,
@@ -12,11 +11,9 @@ export function createSvgViewport(
   content: SVGSVGElement;
   bounds: Size;
 } {
-  const doc = canvas.ownerDocument;
   const shadow = canvas.attachShadow({ mode: 'open' });
-  const style = doc.createElement('style');
+  const style = shadow.createEl('style');
   style.textContent = SHADOW_STYLE;
-  shadow.appendChild(style);
   const content = source.cloneNode(true) as SVGSVGElement;
   const box = source.viewBox.baseVal;
   const rect = source.getBoundingClientRect();
@@ -31,15 +28,15 @@ export function createSvgViewport(
   content.setAttribute('height', String(bounds.height));
   content.setAttribute('x', '0');
   content.setAttribute('y', '0');
-  content.style.width = `${bounds.width}px`;
-  content.style.height = `${bounds.height}px`;
-  content.style.maxWidth = 'none';
-  content.style.maxHeight = 'none';
-  content.style.overflow = 'hidden';
-  const viewport = doc.createElementNS(SVG_NS, 'svg');
-  viewport.classList.add('mpv-svg-viewport');
+  content.setCssStyles({
+    width: `${bounds.width}px`,
+    height: `${bounds.height}px`,
+    maxWidth: 'none',
+    maxHeight: 'none',
+    overflow: 'hidden',
+  });
+  const viewport = shadow.createSvg('svg', { cls: 'mpv-svg-viewport' });
   viewport.setAttribute('preserveAspectRatio', 'none');
   viewport.appendChild(content);
-  shadow.appendChild(viewport);
   return { viewport, content, bounds };
 }
