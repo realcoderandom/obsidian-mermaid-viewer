@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add **新窗口打开** to every diagram header, which shows that diagram at full size in a pop-out window while the note stays visible in the main window.
+- Support pop-out windows: each window keeps its own diagram controls and viewer.
+- Remove both command-palette commands; the diagram header actions cover them.
+
 ## 1.5.3
 
 - Load all viewer and diagram CSS through the Obsidian-managed stylesheet, without injecting style elements.
